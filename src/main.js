@@ -1,0 +1,97 @@
+let text = document.querySelector("#text");
+let style = document.querySelector("#style");
+let str = `/*什么是快乐星球？
+*什么是快乐星球？
+*如果你不知道快乐星球的话，那我带你研究研究！
+*现在先把我们的文字变成红色*/
+body{
+    color:red;
+}
+/*现在我们弄个div*/
+#circle{
+    position:fixed;
+    left:40%;
+    top:0;
+    height:200px;
+    width:200px;
+    border:1px solid red;
+}
+/*接下来，我们把div变成一个八卦阵*/
+/*首先，我们把div先变成一个圆*/
+#circle{
+    border-radius:50%;
+    box-shadow:0 0 3px rgba(0,0,0,0.5);
+    border:none;
+}
+/*我们都知道这是一个阴阳图，所以.......*/
+#circle{
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%,
+    rgba(255,255,255,1) 50%,
+    rgba(0,0,0,1) 50%,
+    rgba(0,0,0,1) 100%);
+}
+/*我们加一个黑风火轮*/
+#circle::before{
+    content: '';
+    display: block;
+    position: absolute;
+    width:100px;
+    height:100px;
+    top:0;
+    right:0;
+    transform:translateX(-50%);
+    background:black;
+    border-radius:50%;
+}
+/*我们加一个白风火轮*/
+#circle::after{
+    content: '';
+    display: block;
+    position: absolute;
+    width:100px;
+    height:100px;
+    top:100px;
+    right:0;
+    transform:translateX(-50%);
+    background:white;
+    border-radius:50%;
+}
+/*之后我们在黑火轮中扣个小白风火轮*/
+#circle::before{
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%,
+    rgba(255,255,255,1) 20%,
+    rgba(0,0,0,1) 20%,
+    rgba(0,0,0,1) 100%);
+}
+/*之后我们在白火轮中扣个小黑风火轮*/
+#circle::after{
+    background: radial-gradient(circle, rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 20%,
+    rgba(255,255,255,1) 20%,
+    rgba(255,255,255,1) 100%);
+}
+`;
+let str2 = '';
+let n = 0;
+let step = () => {
+    // str[n] = str[n] === ' ' ? "&nbsp" : str[n];
+    // str2 += str[n] === "\n" ? "<br>" : str[n];
+    if (str[n] === '\n') {
+        str2 += "<br>";
+    } else if (str[n] === ' ') {
+        str2 += "&nbsp";
+    } else {
+        str2 += str[n];
+    }
+
+    text.innerHTML = str2;
+    style.innerHTML = str.substring(0, n);
+    n += 1;
+    if (n < str.length) {
+        setTimeout(() => {
+            step();
+        }, 50)
+    }
+    window.scrollTo(0, 9999);
+}
+step();
